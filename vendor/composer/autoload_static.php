@@ -23,8 +23,19 @@ class ComposerStaticInite17cf65ca4600dfdbe22575bf03b796f
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'ShotLog\\Controller' => __DIR__ . '/../..' . '/src/Controller.php',
+        'ShotLog\\Controllers\\CalenderController' => __DIR__ . '/../..' . '/src/Controllers/CalenderController.php',
+        'ShotLog\\Controllers\\CompetitionController' => __DIR__ . '/../..' . '/src/Controllers/CompetitionController.php',
         'ShotLog\\Controllers\\HomeController' => __DIR__ . '/../..' . '/src/Controllers/HomeController.php',
+        'ShotLog\\Controllers\\LoginController' => __DIR__ . '/../..' . '/src/Controllers/LoginController.php',
+        'ShotLog\\Controllers\\LogoutController' => __DIR__ . '/../..' . '/src/Controllers/LogoutController.php',
+        'ShotLog\\Controllers\\TrainingController' => __DIR__ . '/../..' . '/src/Controllers/TrainingController.php',
+        'ShotLog\\Controllers\\UserManagementController' => __DIR__ . '/../..' . '/src/Controllers/UserManagementController.php',
+        'ShotLog\\DAO\\SessionDAO' => __DIR__ . '/../..' . '/src/DAO/SessionDAO.php',
+        'ShotLog\\DAO\\UserDAO' => __DIR__ . '/../..' . '/src/DAO/UserDAO.php',
+        'ShotLog\\Models\\Session' => __DIR__ . '/../..' . '/src/Models/Session.php',
+        'ShotLog\\Models\\User' => __DIR__ . '/../..' . '/src/Models/User.php',
         'ShotLog\\Router' => __DIR__ . '/../..' . '/src/Router.php',
+        'ShotLog\\Utils\\Config' => __DIR__ . '/../..' . '/src/Utils/Config.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
