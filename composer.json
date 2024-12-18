@@ -1,0 +1,17 @@
+{
+    "name": "fabkreuzer/shotlogweb",
+    "description": "Track your sessions",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "ShotLog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fabian Kreuzer",
+            "email": "kreuzer.fabian4@gmail.com"
+        }
+    ],
+    "require": {}
+}

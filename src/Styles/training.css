@@ -1,0 +1,36 @@
+.training-session-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px; /* Space between cards */
+    margin-top: 16px;
+}
+
+/* Individual session cards */
+.training-session-card {
+    background-color: #dddddd;
+    border: 1px solid #616161; /* Subtle border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #616161;
+}
+
+/* Hover effect for cards */
+.training-session-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+}
+
+/* Title styling */
+.training-session-title {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* General text styling */
+.training-session-card p {
+    margin: 4px 0;
+    color: #616161;/* Subtle text color */
+}

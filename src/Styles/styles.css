@@ -1,0 +1,57 @@
+@import url(variables.css);
+@import url(training.css);
+@import url(calender.css);
+body {
+    background-color: aliceblue;
+}
+
+.bg-dark-green {
+    background-color: var(--dark-green);
+    color: white;
+}
+button.bg-dark-green:hover {
+    background-color: var(--light-green);
+    color: white;
+}
+
+.btn-logout {
+    background-color: #255b1d;
+}
+
+
+.notifications {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.notification {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease, margin 0.5s ease; /* Smooth transitions */
+}
+
+.notification-success { background-color: #28a745; }
+.notification-warn { background-color: #ffc107; }
+.notification-error { background-color: #dc3545; }
+
+.close-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #ddd;
+}

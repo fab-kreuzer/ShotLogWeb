@@ -1,0 +1,7 @@
+.calender {
+    padding: 50px;
+}
+.fc-event-location {
+    font-size: 0.8em !important;
+    color: lightgray !important;
+  }
