@@ -14,7 +14,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Passwort</label>
-                        <input type="text" class="form-control" id="password" name="password" required>
+                        <div class="input-group mb-3">
+                            <input class="form-control password" id="password" class="block mt-1 w-full" type="password" name="password" required />
+                            <span class="input-group-text togglePassword" id="">
+                                <i class="fa fa-eye"></i>
+                            </span>
+                        </div>                    
                     </div>
                     <div class="mb-3">
                         <label for="vorname" class="form-label">Vorname</label>
@@ -48,3 +53,20 @@
     </div>
 </div>
 
+<script>
+    document.querySelector('.togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle icon class
+        const icon = this.querySelector('i');
+        if (type === 'password') {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    });
+</script>
