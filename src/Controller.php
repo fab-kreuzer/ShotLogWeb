@@ -21,7 +21,7 @@ class Controller {
     protected function render($view, $data = []) {
         $data = $data + ['notifications'=> $this->getNotifications()];
         extract($data);
-        include "views/$view.php";
+        include "Views/$view.php";
     }
 
 }
