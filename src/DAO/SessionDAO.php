@@ -59,4 +59,31 @@ class SessionDAO
 
         return $results;
     }
+       /**
+     * Get all sessions for the given User.
+     *
+     * @param bool $isWettkampf
+     * @return Session[]
+     */
+    public function getSessionByUser(string $userID): array
+    {
+        $query = 'SELECT * FROM session where user_id = :userid';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':userid', $userID);
+        $stmt->execute();
+
+        $results = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $results[] = new Session(
+                $row['id'],
+                $row['Ort'],
+                $row['start_at'],
+                (bool)$row['isWettkampf'],
+                $row['inserted_at'],
+                $row['user_id']
+            );
+        }
+
+        return $results;
+    }
 }

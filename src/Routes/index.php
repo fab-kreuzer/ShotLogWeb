@@ -23,7 +23,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Check if user is logged in
-if (!isset($_SESSION['user_id']) && $requestUri !== '/login') {
+if (
+    !isset($_SESSION['user_id']) && 
+    $requestUri !== '/login' && 
+    strpos($requestUri, '/api/') !== 0 // Skip check if URI starts with /api/
+) {
     header('Location: /login');
     exit;
 }
@@ -42,5 +46,6 @@ $router->get("/usermanagement", UserManagementController::class, "enter");
 $router->post("/addUser", UserManagementController::class, "addUser");
 $router->post("/removeUser", UserManagementController::class, "removeUser");
 $router->post('/updateUser', UserManagementController::class, 'updateUser');
+$router->get('/api/getUserEvents', CalenderController::class,'getUserEvents');
 
 $router->dispatch();

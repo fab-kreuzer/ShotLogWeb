@@ -27,7 +27,8 @@
 
             //Einträge im Kalender
             eventDisplay: 'block',
-            events: '/api/getEvents.php',
+            events: '/api/getUserEvents',
+
             //Verschieben:
             editable: true,
             eventDrop: function(info) {
