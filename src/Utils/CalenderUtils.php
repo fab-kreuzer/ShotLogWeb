@@ -16,10 +16,12 @@ class CalenderUtils
         $data = array_map(function ($session) {
             return [
                 'id' => $session->id,
-                'title' => $session->ort,
+                'title' => $session->isWettkampf ? 'Wettkampf' : 'Training',
                 'start' => $session->startAt,
                 'end' => $session->startAt,
-                'description' => 'Ort: ' . $session->ort,
+                'extendedProps' => [ // Nested properties
+                    'location' => $session->ort
+                ],
                 'color' => $session->isWettkampf ? '#4a1f17' : '#3a4a17'
             ];
         }, $sessions);
