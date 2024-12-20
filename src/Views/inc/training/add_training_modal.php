@@ -5,8 +5,12 @@
                 <h5 class="modal-title" id="addTrainingModalLabel">Neues Training hinzufügen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="api/addTraining.php" method="post"> <!-- Redirects to new handler -->
+            <form action="/addTraining" method="post"> <!-- Redirects to new handler -->
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">Beschreibung</label>
+                        <input type="text" class="form-control" id="desc" name="desc" required>
+                    </div>
                     <div class="mb-3">
                         <label for="location" class="form-label">Ort</label>
                         <input type="text" class="form-control" id="location" name="location" required>

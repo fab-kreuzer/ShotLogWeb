@@ -10,8 +10,9 @@ class Session
     public $isWettkampf;
     public $insertedAt;
     public $userId;
+    public $desc;
 
-    public function __construct($id, $ort, $startAt, $isWettkampf, $insertedAt, $userId)
+    public function __construct($id = null, $ort = null, $startAt = null, $isWettkampf = null, $insertedAt = null, $userId = null, $desc = null)
     {
         $this->id = $id;
         $this->ort = $ort;
@@ -19,5 +20,6 @@ class Session
         $this->isWettkampf = $isWettkampf;
         $this->insertedAt = $insertedAt;
         $this->userId = $userId;
+        $this ->desc = $desc;
     }
 }

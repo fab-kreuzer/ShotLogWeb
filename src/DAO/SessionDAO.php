@@ -53,7 +53,8 @@ class SessionDAO
                 $row['start_at'],
                 (bool)$row['isWettkampf'],
                 $row['inserted_at'],
-                $row['user_id']
+                $row['user_id'],
+                $row['desc'],
             );
         }
 
@@ -80,10 +81,25 @@ class SessionDAO
                 $row['start_at'],
                 (bool)$row['isWettkampf'],
                 $row['inserted_at'],
-                $row['user_id']
+                $row['user_id'],
+                $row['desc']
             );
         }
 
         return $results;
     }
+
+    public function addSession(Session $session): bool {
+        $query = 'INSERT INTO session (isWettkampf, ort, start_at, user_id, `desc`) 
+                  VALUES (:isWettkampf, :ort, :start_at, :user_id, :desc)';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue('isWettkampf', $session->isWettkampf ? 1 : 0);
+        $stmt->bindValue('ort', $session->ort);
+        $stmt->bindValue('start_at', $session->startAt);
+        $stmt->bindValue('user_id', $_SESSION['user_id']);
+        $stmt->bindValue('desc', $session->desc);
+        return $stmt->execute();
+    }
+    
+    
 }

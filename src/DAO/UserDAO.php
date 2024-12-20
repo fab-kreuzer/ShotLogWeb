@@ -173,7 +173,6 @@ class UserDAO
     }
 
     return $result; 
-}
-
+}        
     
 }

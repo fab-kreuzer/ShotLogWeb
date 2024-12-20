@@ -48,5 +48,7 @@ $router->post("/addUser", UserManagementController::class, "addUser");
 $router->post("/removeUser", UserManagementController::class, "removeUser");
 $router->post('/updateUser', UserManagementController::class, 'updateUser');
 $router->get('/api/getUserEvents', CalenderController::class,'getUserEvents');
+$router->post('/addTraining', TrainingController::class,'addTraining');
+$router->post('/addCompetition', CompetitionController::class,'addCompetition');
 
 $router->dispatch();

@@ -11,10 +11,10 @@
 </div>
 
 <!-- Modal einbinden -->
-<?php include 'inc/competition/add_session_modal.php'; ?>
+<?php include 'inc/competition/add_comp_modal.php'; ?>
 
 <!-- Include Sessions view -->
-<?php include 'inc/competition/display_training_sessions.php'; ?>
+<?php include 'inc/competition/display_comp_sessions.php'; ?>
 
 <?php 
     $content = ob_get_clean();

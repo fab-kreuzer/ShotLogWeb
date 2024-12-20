@@ -16,7 +16,7 @@ class CalenderUtils
         $data = array_map(function ($session) {
             return [
                 'id' => $session->id,
-                'title' => $session->isWettkampf ? 'Wettkampf' : 'Training',
+                'title' => $session->desc,
                 'start' => $session->startAt,
                 'end' => $session->startAt,
                 'extendedProps' => [ // Nested properties
