@@ -7,18 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'ShotLog\\Controller' => $baseDir . '/src/Controller.php',
-    'ShotLog\\Controllers\\CalenderController' => $baseDir . '/src/Controllers/CalenderController.php',
-    'ShotLog\\Controllers\\CompetitionController' => $baseDir . '/src/Controllers/CompetitionController.php',
-    'ShotLog\\Controllers\\HomeController' => $baseDir . '/src/Controllers/HomeController.php',
-    'ShotLog\\Controllers\\LoginController' => $baseDir . '/src/Controllers/LoginController.php',
-    'ShotLog\\Controllers\\LogoutController' => $baseDir . '/src/Controllers/LogoutController.php',
-    'ShotLog\\Controllers\\TrainingController' => $baseDir . '/src/Controllers/TrainingController.php',
-    'ShotLog\\Controllers\\UserManagementController' => $baseDir . '/src/Controllers/UserManagementController.php',
-    'ShotLog\\DAO\\SessionDAO' => $baseDir . '/src/DAO/SessionDAO.php',
-    'ShotLog\\DAO\\UserDAO' => $baseDir . '/src/DAO/UserDAO.php',
-    'ShotLog\\Models\\Session' => $baseDir . '/src/Models/Session.php',
-    'ShotLog\\Models\\User' => $baseDir . '/src/Models/User.php',
-    'ShotLog\\Router' => $baseDir . '/src/Router.php',
-    'ShotLog\\Utils\\Config' => $baseDir . '/src/Utils/Config.php',
 );

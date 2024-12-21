@@ -27,8 +27,8 @@ if (session_status() == PHP_SESSION_NONE) {
 // Check if user is logged in
 if (
     !isset($_SESSION['user_id']) && 
-    $requestUri !== '/login' && 
-    strpos($requestUri, '/api/') !== 0 // Skip check if URI starts with /api/
+    $requestUri !== '/login' &&
+    !str_starts_with($requestUri, '/api/') // Skip check if URI starts with /api/
 ) {
     header('Location: /login');
     exit;
