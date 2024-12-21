@@ -27,7 +27,6 @@ include 'inc/usermgm/displayUsers.php';
         document.getElementById('isDev').value = this.dataset.isDev ? 1 : 0;
     });
 });
-
 </script>
 
 <?php 

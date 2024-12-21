@@ -10,11 +10,15 @@
     <p>Hier kannst du dein Training verwalten.</p>
 </div>
 
-<!-- Modal einbinden -->
-<?php include 'inc/training/add_training_modal.php'; ?>
 
-<!-- Include Sessions view -->
-<?php include 'inc/training/display_training_sessions.php'; ?>
+<?php
+
+//Modal einbinden
+include 'inc/training/add_training_modal.php';
+//Include Sessions view
+include 'inc/training/display_training_sessions.php';
+include 'inc/session/editSession.php';
+?>
 
 <?php 
     $content = ob_get_clean();

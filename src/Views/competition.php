@@ -10,13 +10,15 @@
     <p>Hier kannst du deine Wettkämpfe verwalten.</p>
 </div>
 
-<!-- Modal einbinden -->
-<?php include 'inc/competition/add_comp_modal.php'; ?>
 
-<!-- Include Sessions view -->
-<?php include 'inc/competition/display_comp_sessions.php'; ?>
+<?php
+    // Modal einbinden
+    include 'inc/competition/add_comp_modal.php';
 
-<?php 
+    //Include Sessions view
+    include 'inc/competition/display_comp_sessions.php';
+    include 'inc/session/editSession.php';
+
     $content = ob_get_clean();
     include 'inc/layout.php';
 ?>

@@ -101,5 +101,32 @@ class SessionDAO
         return $stmt->execute();
     }
     
-    
+    public function deleteSession(int $id) {
+        $query = 'DELETE FROM session where id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+    }
+
+    public function updateSession(Session $session) {
+        $query = 'UPDATE session 
+        SET isWettkampf = :isWettkampf, 
+            ort = :ort, 
+            start_at = :start_at, 
+            `desc` = :desc 
+        WHERE id = :id';
+
+        $stmt = $this->db->prepare($query);
+
+        // Bind parameters from the Session object
+        $stmt->bindValue('isWettkampf', $session->isWettkampf ? 1 : 0, PDO::PARAM_INT);
+        $stmt->bindValue('ort', $session->ort, PDO::PARAM_STR);
+        $stmt->bindValue('start_at', $session->startAt, PDO::PARAM_STR);
+        $stmt->bindValue('desc', $session->desc, PDO::PARAM_STR);
+        $stmt->bindValue('id', $session->id, PDO::PARAM_INT);
+
+        // Execute the query and return the result
+        return $stmt->execute();
+
+    }
 }

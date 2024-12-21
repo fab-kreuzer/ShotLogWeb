@@ -3,5 +3,5 @@
 }
 .fc-event-location {
     font-size: 0.8em !important;
-    color: lightgray !important;
+    color: var(--light-gray) !important;
   }

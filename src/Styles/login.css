@@ -1,7 +1,10 @@
 @import url("variables.css");
+body {
+    background-color: var(--alice-blue);
+}
 .login-green {
     background-color: var(--light-green);
-    color: var(--light-white);
+    color: var(--fore-ground-color-prim);
 }
 
 .hover-color:hover {

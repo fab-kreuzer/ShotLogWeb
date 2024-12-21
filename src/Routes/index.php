@@ -2,6 +2,7 @@
 use ShotLog\Controllers\HomeController;
 use ShotLog\Controllers\LoginController;
 use ShotLog\Controllers\LogoutController;
+use ShotLog\Controllers\SessionController;
 use ShotLog\Controllers\TrainingController;
 use ShotLog\Controllers\CompetitionController;
 use ShotLog\Controllers\CalenderController;
@@ -50,5 +51,7 @@ $router->post('/updateUser', UserManagementController::class, 'updateUser');
 $router->get('/api/getUserEvents', CalenderController::class,'getUserEvents');
 $router->post('/addTraining', TrainingController::class,'addTraining');
 $router->post('/addCompetition', CompetitionController::class,'addCompetition');
+$router->post('/removeSession', SessionController::class,'deleteSession');
+$router->post('/updateSession', SessionController::class,'updateSession');
 
 $router->dispatch();

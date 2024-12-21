@@ -1,21 +1,23 @@
 @import url(variables.css);
 @import url(training.css);
 @import url(calender.css);
+@import url(sessions.css);
+
 body {
-    background-color: aliceblue;
+    background-color: var(--alice-blue);
 }
 
 .bg-dark-green {
     background-color: var(--dark-green);
-    color: white;
+    color: var(--fore-ground-color-prim);
 }
 button.bg-dark-green:hover {
     background-color: var(--light-green);
-    color: white;
+    color: var(--fore-ground-color-prim);
 }
 
 .btn-logout {
-    background-color: #255b1d;
+    background-color: var(--light-green);
 }
 
 
@@ -30,7 +32,7 @@ button.bg-dark-green:hover {
     margin-bottom: 10px;
     padding: 10px 20px;
     border-radius: 5px;
-    color: #fff;
+    color: var(--fore-ground-color-prim);
     position: relative;
     opacity: 1;
     transition: opacity 0.5s ease, transform 0.5s ease, margin 0.5s ease; /* Smooth transitions */
@@ -46,12 +48,12 @@ button.bg-dark-green:hover {
     right: 2px;
     border: none;
     background: none;
-    color: #fff;
+    color: var(--fore-ground-color-prim);
     font-size: 16px;
     cursor: pointer;
     line-height: 1;
 }
 
 .close-btn:hover {
-    color: #ddd;
+    color: var(--light-gray);
 }
