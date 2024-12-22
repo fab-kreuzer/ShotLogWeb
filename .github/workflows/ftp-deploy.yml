@@ -16,8 +16,9 @@ jobs:
       - name: Deploy over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: hosting211599.ae966.netcup.net
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./
-          local-dir: ./
+          protocol: ftp
+          timeout: 120
+          exclude: '.idea/**'
