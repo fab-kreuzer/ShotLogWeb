@@ -1,4 +1,4 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require './vendor/autoload.php';
 
-$routes = require  __DIR__ . '/src/Routes/index.php';
+$routes = require  './src/Routes/index.php';
