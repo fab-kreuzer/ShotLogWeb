@@ -19,7 +19,7 @@ class TrainingController extends Controller {
         $session->desc = $_POST['desc'];
         $session->ort = $_POST['location'];
         $session->startAt = $_POST['datetime'];
-        $session->isWettkampf = false; //trainign
+        $session->isWettkampf = false;
         $session->insertedAt = date('Y-m-d H:i:s');
         $session->userId = $_SESSION['user_id'];
     

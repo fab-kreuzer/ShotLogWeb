@@ -10,6 +10,9 @@ class SessionDAO
 {
     private $db;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(){
         $host = Config::getFromDBProperties("db.host");
         $dbname = Config::getFromDBProperties("db.name");

@@ -2,14 +2,18 @@
 
 namespace ShotLog\DAO;
 
+use Exception;
 use ShotLog\Models\User;
 use ShotLog\Utils\Config;
 use PDO;
 
 class UserDAO
 {
-    private $db;
+    private PDO $db;
 
+    /**
+     * @throws Exception
+     */
     public function __construct(){
         $host = Config::getFromDBProperties("db.host");
         $dbname = Config::getFromDBProperties("db.name");
