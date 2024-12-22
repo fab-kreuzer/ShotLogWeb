@@ -132,4 +132,22 @@ class SessionDAO
         return $stmt->execute();
 
     }
+
+    public function updateTime(string $id, string $start_at): bool
+    {
+        $query = 'UPDATE session 
+        SET start_at = :start_at
+        WHERE id = :id';
+
+        $stmt = $this->db->prepare($query);
+
+        // Bind parameters from the Session object
+        $stmt->bindValue('start_at', $start_at);
+        $stmt->bindValue('id', $id);
+
+        // Execute the query and return the result
+        return $stmt->execute();
+
+    }
+
 }

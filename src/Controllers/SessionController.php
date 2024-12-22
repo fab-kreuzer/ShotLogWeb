@@ -36,4 +36,17 @@ class SessionController extends Controller {
             header('Location: /training');
         }
     }
+
+    public function updateTime()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $sessionId = $data['sessionId'];
+        $newTime = $data['newTime'];
+
+        $sessionDAO = new SessionDAO();
+        $sessionDAO->updateTime($sessionId, $newTime);
+        header('Location: /calender');
+
+    }
 }

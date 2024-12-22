@@ -27,18 +27,52 @@
 
             //Einträge im Kalender
             eventDisplay: 'block',
-            events: '/api/getUserEvents',
+            events: async function (info, successCallback, failureCallback) {
+                try {
+                    // Fetch user events
+                    let userEventsResponse = await fetch('/api/getUserEvents');
+                    let userEvents = await userEventsResponse.json();
+
+                    // Fetch Bavarian holidays
+                    let holidaysResponse = await fetch('https://feiertage-api.de/api/?jahr=2024&nur_land=BY');
+                    let holidaysData = await holidaysResponse.json();
+
+                    // Convert holidays to FullCalendar format
+                    let holidayEvents = Object.keys(holidaysData).map(key => {
+                        return {
+                            title: key,
+                            start: holidaysData[key].datum,
+                            allDay: true,
+                            color: '#96831f',
+                            extendedProps: {
+                                additionalInfo: holidaysData[key].hinweis,
+                            }
+                        };
+                    });
+                    console.log(holidayEvents);
+                    // Combine user events and holidays
+                    successCallback([...userEvents, ...holidayEvents]);
+                } catch (error) {
+                    console.error('Error fetching events:', error);
+                    failureCallback(error);
+                }
+            },
 
             //Verschieben:
             editable: true,
             eventDrop: function(info) {
-                alert('Event moved to: ' + info.event.start.toISOString());
+                const sessionId = info.event.id;
+                const newTime = info.event.start.toISOString();
+                fetch('/updateTime', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId, newTime }),
+                }).catch(error => {
+                    console.error('Error updating event:', error);
+                    alert('An error occurred while updating the event.');
+                });
             },
-            //Klicken:
-            eventClick: function(info) {
-                alert('Event: ' + info.event.title + " um " + info.event.start.toISOString);
-                info.jsEvent.preventDefault();
-            },
+
             //Wochennummern
             weekNumbers: true,
             weekText: 'KW',
@@ -59,16 +93,49 @@
                 if (event.extendedProps.location) {
                     let location = document.createElement('div');
                     location.textContent = `📍 ${event.extendedProps.location}`;
+
+                    const timeElement = document.createElement('div'); // Create a new div or span for the time
+                    timeElement.textContent = `🕒 ${event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} Uhr`;
+                    location.appendChild(timeElement);
+
                     location.className = 'fc-event-location';
+                    location.style.marginTop = '4px;';
+                    container.appendChild(location);
+                }
+
+                if (event.extendedProps.additionalInfo) {
+                    let location = document.createElement('div');
+                    location.textContent = `${event.extendedProps.additionalInfo}`;
+                    location.className = 'fc-event-location';
+                    location.style.marginTop = '4px;';
                     container.appendChild(location);
                 }
 
                 return { domNodes: [container] };
+            },
+            businessHours: {
+                daysOfWeek: [1, 2, 3, 4, 5], // Monday to Friday
+                startTime: '08:00', // Start time
+                endTime: '18:00',   // End time
             }
         });
+
+        document.addEventListener('keydown', function(e) {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    calendar.prev();
+                    break;
+                case 'ArrowRight':
+                    calendar.next();
+                    break;
+                case 't':
+                    calendar.today();
+                    break;
+            }
+        });
+
         calendar.render();
     });
-
 </script>
 
 <div id='calendar' class="calender"></div>
