@@ -19,7 +19,7 @@ class CompetitionController extends Controller {
         $session->desc = $_POST['desc'];
         $session->ort = $_POST['location'];
         $session->startAt = $_POST['datetime'];
-        $session->isWettkampf = true; //trainign
+        $session->isWettkampf = true;
         $session->insertedAt = date('Y-m-d H:i:s');
         $session->userId = $_SESSION['user_id'];
     

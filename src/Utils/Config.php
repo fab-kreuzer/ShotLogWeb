@@ -2,6 +2,8 @@
 
 namespace ShotLog\Utils;
 
+use Exception;
+
 class Config
 {
     /**
@@ -11,7 +13,7 @@ class Config
      * @return array Parsed config data.
      * @throws Exception If the file does not exist.
      */
-    private static function getFile($filePath)
+    private static function getFile(string $filePath): array
     {
         if (!file_exists($filePath)) {
             throw new \Exception("Config file not found: $filePath");
@@ -24,8 +26,9 @@ class Config
      *
      * @param string $key The key to fetch from the file.
      * @return string|null The value of the key, or null if not found.
+     * @throws Exception
      */
-    public static function getFromDBProperties($key)
+    public static function getFromDBProperties(string $key): ?string
     {
         $filePath = __DIR__ . '/../DAO/config.properties';
 

@@ -63,5 +63,6 @@ $router->post('/addTraining', TrainingController::class,'addTraining');
 $router->post('/addCompetition', CompetitionController::class,'addCompetition');
 $router->post('/removeSession', SessionController::class,'deleteSession');
 $router->post('/updateSession', SessionController::class,'updateSession');
+$router->post('/updateTime', SessionController::class,'updateTime');
 
 $router->dispatch();
