@@ -34,6 +34,16 @@ if (
     exit;
 }
 
+// Check if the subdomain is 'dev'
+$host = $_SERVER['HTTP_HOST']; // Full host name (e.g., dev.example.com)
+$parts = explode('.', $host);
+
+// Ensure there are enough parts in the hostname to check the subdomain
+if (count($parts) > 2 && $parts[0] === 'dev') {
+    // Include the PHP file
+    include './src/Views/dev/devBanner.php';
+}
+
 $router = new Router();
 
 $router->get("/", HomeController::class, "enter");
