@@ -2,6 +2,8 @@
 
 namespace ShotLog\Models;
 
+use ShotLog\Models\Serie;
+
 class Session
 {
     public $id;
@@ -20,6 +22,6 @@ class Session
         $this->isWettkampf = $isWettkampf;
         $this->insertedAt = $insertedAt;
         $this->userId = $userId;
-        $this ->desc = $desc;
+        $this->desc = $desc;
     }
 }

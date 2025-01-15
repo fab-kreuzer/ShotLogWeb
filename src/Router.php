@@ -2,6 +2,8 @@
 
 namespace ShotLog;
 
+use Exception;
+
 class Router {
     protected $routes = [];
 
@@ -15,12 +17,15 @@ class Router {
     {
         $this->addRoute($route, $controller, $action, "GET");
     }
-    public function post($route, $controller, $action)
+    public function post($route, $controller, $action): void
     {
         $this->addRoute($route, $controller, $action, "POST");
     }
 
-    public function dispatch()
+    /**
+     * @throws Exception
+     */
+    public function dispatch(): void
     {
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
         $method =  $_SERVER['REQUEST_METHOD'];
@@ -32,7 +37,7 @@ class Router {
             $controller = new $controller();
             $controller->$action();
         } else {
-            throw new \Exception("No route found for URI: $uri");
+            throw new Exception("No route found for URI: $uri");
         }
     }
 }

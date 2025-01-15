@@ -35,7 +35,7 @@ if (
 }
 
 // Check if the subdomain is 'dev'
-$host = $_SERVER['HTTP_HOST']; // Full host name (e.g., dev.example.com)
+$host = $_SERVER['HTTP_HOST'];
 $parts = explode('.', $host);
 
 // Ensure there are enough parts in the hostname to check the subdomain

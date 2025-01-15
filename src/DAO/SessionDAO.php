@@ -150,4 +150,9 @@ class SessionDAO
 
     }
 
+    public function lastInsertId(): bool|string
+    {
+        return $this->db->lastInsertId();
+    }
+
 }
