@@ -2,7 +2,9 @@
 
 namespace ShotLog\Models;
 
-class Schuss
+use JsonSerializable;
+
+class Schuss implements JsonSerializable
 {
     public int $id;
     public float $wert;
@@ -36,5 +38,14 @@ class Schuss
     public function setSerienId(int $serienId): void
     {
         $this->serienId = $serienId;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'wert' => $this->wert,
+            '$serienId' => $this->serienId
+        ];
     }
 }

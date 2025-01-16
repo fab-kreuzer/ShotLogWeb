@@ -2,11 +2,14 @@
 
 namespace ShotLog\Models;
 
-class Serie
+use JsonSerializable;
+
+class Serie implements JsonSerializable
 {
     private int $id;
     private int $sessionId;
     private bool $isTest;
+    private array $schusse;
 
     // Getters and Setters
     public function getId(): int
@@ -38,5 +41,24 @@ class Serie
     {
         $this->isTest = $isTest;
     }
+    public function getSchusse(): array
+    {
+        return $this->schusse;
+    }
 
+    public function setSchusse(array $schusse): void
+    {
+        $this->schusse = $schusse;
+    }
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'sessionId' => $this->sessionId,
+            'isTest' => $this->isTest,
+            'schusse' => array_map(function ($schuss) {
+                return $schuss instanceof JsonSerializable ? $schuss->jsonSerialize() : $schuss;
+            }, $this->schusse),
+        ];
+    }
 }

@@ -51,4 +51,38 @@ class ShotDAO
     {
         return $this->db->lastInsertId();
     }
+
+    public function getShotsBySerieId(mixed $id): array
+    {
+        $query = "SELECT * FROM schuss WHERE serienId = :serienId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':serienId', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $shots = [];
+            foreach ($result as $row) {
+                $shot = new Schuss();
+                $shot->setId($row['id']);
+                $shot->setWert($row['wert']);
+                $shot->setSerienId($row['serienId']);
+                $shots[] = $shot;
+            }
+
+            return $shots;
+        }
+
+        return []; // Return an empty array if execution fails or no data found.
+    }
+
+    public function deleteshot(mixed $shotId): bool
+    {
+        $query = "DELETE FROM schuss WHERE id = :shotId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':shotId', $shotId);
+        return $stmt->execute();
+
+    }
+
 }

@@ -4,7 +4,6 @@ namespace ShotLog\DAO;
 
 use Exception;
 use ShotLog\Models\Serie;
-use ShotLog\Models\User;
 use ShotLog\Utils\Config;
 use PDO;
 
@@ -50,4 +49,29 @@ class SerienDAO
     {
         return $this->db->lastInsertId();
     }
+
+    public function getSeriesBySessionId($sessionId): array
+    {
+        $query = "SELECT * FROM serie WHERE sessionId = :sessionId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':sessionId', $sessionId, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $series = [];
+            foreach ($result as $row) {
+                $serie = new Serie();
+                $serie->setId($row['id']);
+                $serie->setSessionId($row['sessionId']);
+                $serie->setIsTest((bool) $row['isTest']);
+                $series[] = $serie;
+            }
+
+            return $series;
+        }
+
+        return [];
+    }
+
 }

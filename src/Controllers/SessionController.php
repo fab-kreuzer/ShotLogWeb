@@ -21,16 +21,16 @@ class SessionController extends Controller {
     {
         // Assume $session is populated with the updated values
         $session = new Session();
-        $session->id = $_POST['sessionId'];
-        $session->isWettkampf = $_POST['isWettkampf'];
-        $session->ort = $_POST['ort'];
-        $session->startAt = $_POST['start_at'];
-        $session->desc = $_POST['desc'];
+        $session->setId($_POST['sessionId']);
+        $session->setIsWettkampf($_POST['isWettkampf']);
+        $session->setOrt($_POST['ort']);
+        $session->setStartAt($_POST['start_at']);
+        $session->setDesc($_POST['desc']);
 
         $sessionDAO = new SessionDAO();
         $sessionDAO->updateSession($session);
 
-        if ($session->isWettkampf) {
+        if ($session->getIsWettkampf()) {
             header('Location: /competition');
         } else {
             header('Location: /training');

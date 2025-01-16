@@ -96,11 +96,11 @@ class SessionDAO
         $query = 'INSERT INTO session (isWettkampf, ort, start_at, user_id, `desc`) 
                   VALUES (:isWettkampf, :ort, :start_at, :user_id, :desc)';
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue('isWettkampf', $session->isWettkampf ? 1 : 0);
-        $stmt->bindValue('ort', $session->ort);
-        $stmt->bindValue('start_at', $session->startAt);
+        $stmt->bindValue('isWettkampf', $session->getIsWettkampf() ? 1 : 0);
+        $stmt->bindValue('ort', $session->getOrt());
+        $stmt->bindValue('start_at', $session->getStartAt());
         $stmt->bindValue('user_id', $_SESSION['user_id']);
-        $stmt->bindValue('desc', $session->desc);
+        $stmt->bindValue('desc', $session->getDesc());
         return $stmt->execute();
     }
     
@@ -122,11 +122,11 @@ class SessionDAO
         $stmt = $this->db->prepare($query);
 
         // Bind parameters from the Session object
-        $stmt->bindValue('isWettkampf', $session->isWettkampf ? 1 : 0, PDO::PARAM_INT);
-        $stmt->bindValue('ort', $session->ort, PDO::PARAM_STR);
-        $stmt->bindValue('start_at', $session->startAt, PDO::PARAM_STR);
-        $stmt->bindValue('desc', $session->desc, PDO::PARAM_STR);
-        $stmt->bindValue('id', $session->id, PDO::PARAM_INT);
+        $stmt->bindValue('isWettkampf', $session->getIsWettkampf() ? 1 : 0, PDO::PARAM_INT);
+        $stmt->bindValue('ort', $session->getOrt(), PDO::PARAM_STR);
+        $stmt->bindValue('start_at', $session->getStartAt(), PDO::PARAM_STR);
+        $stmt->bindValue('desc', $session->getDesc(), PDO::PARAM_STR);
+        $stmt->bindValue('id', $session->getId(), PDO::PARAM_INT);
 
         // Execute the query and return the result
         return $stmt->execute();
@@ -155,4 +155,29 @@ class SessionDAO
         return $this->db->lastInsertId();
     }
 
+    public function getSessionById($sessionId): ?Session
+    {
+        $query = "SELECT * FROM session WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $sessionId, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                $session = new Session();
+                $session->setId($row['id']);
+                $session->setOrt($row['Ort']);
+                $session->setStartAt($row['start_at']);
+                $session->setIsWettkampf((bool) $row['isWettkampf']);
+                $session->setInsertedAt($row['inserted_at']);
+                $session->setUserId($row['user_id']);
+                $session->setDesc($row['desc']);
+
+                return $session;
+            }
+        }
+
+        return null;
+    }
 }

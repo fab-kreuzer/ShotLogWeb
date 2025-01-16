@@ -16,12 +16,12 @@ class CompetitionController extends Controller {
 
     public function addCompetition() {    
         $session = new Session();
-        $session->desc = $_POST['desc'];
-        $session->ort = $_POST['location'];
-        $session->startAt = $_POST['datetime'];
-        $session->isWettkampf = true;
-        $session->insertedAt = date('Y-m-d H:i:s');
-        $session->userId = $_SESSION['user_id'];
+        $session->setDesc($_POST['desc']);
+        $session->setOrt($_POST['location']);
+        $session->setStartAt($_POST['datetime']);
+        $session->setIsWettkampf(true);
+        $session->setInsertedAt(date('Y-m-d H:i:s'));
+        $session->setUserId($_SESSION['user_id']);
     
         $sessionDAO = new SessionDAO();
         $sessionDAO->addSession($session);

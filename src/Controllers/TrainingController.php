@@ -61,7 +61,56 @@ class TrainingController extends Controller {
             }
         }
         // Respond with success
-        echo json_encode(['success' => true, 'sessionId' => $session->id]);
+        echo json_encode(['success' => true, 'sessionId' => $session->getId()]);
         header('Location: /training');
+    }
+    public function getTrainingData()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $sessionId = $_GET['sessionId'] ?? null;
+            if ($sessionId == null) {
+                echo json_encode(['success' => false, 'message' => 'Session ID is required']);
+            }
+
+
+            $sessionDAO = new SessionDAO();
+            $serienDAO = new SerienDAO();
+            $shotDAO = new ShotDAO();
+
+            // Fetch session data
+            $session = $sessionDAO->getSessionById($sessionId);
+            if (!$session) {
+                echo json_encode(['success' => false, 'message' => 'Session not found']);
+                return;
+            }
+
+            // Fetch series data
+            $series = $serienDAO->getSeriesBySessionId($sessionId);
+
+            foreach ($series as &$serie) {
+                $shots = $shotDAO->getShotsBySerieId($serie->getId());
+                $serie->setSchusse($shots);
+            }
+            // Combine data
+            $data = [
+                'session' => $session,
+                'series' => $series,
+            ];
+
+            echo json_encode(['success' => true, 'data' => $data]);
+        }
+    }
+
+    public function deleteShot() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $shotId = $_POST['shotId'] ?? null;
+            if ($shotId == null) {
+                echo json_encode(['success' => false, 'message' => 'Shot ID is required']);
+            }
+
+            $shotDAO = new ShotDAO();
+            $shotDAO->deleteshot($shotId);
+        }
+
     }
 }
