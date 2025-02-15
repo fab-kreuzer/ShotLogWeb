@@ -85,4 +85,11 @@ class ShotDAO
 
     }
 
+    public function updateShot(Schuss $shot): void
+    {
+        $stmt = $this->db->prepare("UPDATE schuss SET wert = :value WHERE id = :id");
+        $stmt->bindValue(':value', $shot->getWert());
+        $stmt->bindValue(':id', $shot->getId());
+        $stmt->execute();
+    }
 }

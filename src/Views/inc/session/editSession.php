@@ -49,6 +49,37 @@
 </div>
 
 <script>
+    document.querySelector('#editSessionModal form').addEventListener('submit', function(event) {
+        // Gather shots data
+        const shotsData = {};
+        const shotInputs = document.querySelectorAll('[id^="schuss-"]');
+
+        shotInputs.forEach(input => {
+            const seriesIndex = input.id.split('-')[1] - 1;
+            const shotIndex = input.id.split('-')[2] - 1;
+            const shotValue = input.value;
+            const shotDbId = input.getAttribute('dbid');
+            
+            console.log('Shot dbid:', shotDbId); // Add this line for debugging
+
+            if (!shotsData[seriesIndex]) {
+                shotsData[seriesIndex] = {};
+            }
+            
+            shotsData[seriesIndex][shotIndex] = {
+                value: shotValue,
+                dbid: shotDbId
+            };
+        });
+
+        // Add shots data to the form as a hidden input
+        const shotsInput = document.createElement('input');
+        shotsInput.type = 'hidden';
+        shotsInput.name = 'shots';
+        shotsInput.value = JSON.stringify(shotsData);
+        this.appendChild(shotsInput);
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         const editButtons = document.querySelectorAll('#edit-session');
 
@@ -114,7 +145,7 @@
                             schussRow.innerHTML = `
                             <div class="col-4">
                                 <label for="schuss-${index + 1}-${i + 1}" class="form-label">Schuss ${i + 1}</label>
-                                <input type="number" class="form-control" id="schuss-${index + 1}-${i + 1}" name="series[${index}][schuss][${i}]" value="${schuss.wert}" step="0.1" required>
+                                <input type="number" class="form-control" id="schuss-${index + 1}-${i + 1}" name="series[${index}][schuss][${i}]" value="${schuss.wert}" dbid="${schuss.id}" step="0.1" required>
                             </div>
                             `;
 

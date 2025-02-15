@@ -4,6 +4,8 @@ namespace ShotLog\Controllers;
 
 use ShotLog\Controller;
 use ShotLog\DAO\SessionDAO;
+use ShotLog\DAO\ShotDAO;
+use ShotLog\Models\Schuss;
 use ShotLog\Models\Session;
 
 class SessionController extends Controller {
@@ -29,6 +31,24 @@ class SessionController extends Controller {
 
         $sessionDAO = new SessionDAO();
         $sessionDAO->updateSession($session);
+
+        // Handle shots
+        if (isset($_POST['shots'])) {
+            $shots = json_decode($_POST['shots'], true);
+            $shotDAO = new ShotDAO();
+
+            foreach ($shots as $seriesIndex => $seriesShots) {
+                foreach ($seriesShots as $shotIndex => $shotData) {
+                    if ($shotData['dbid'] != null) {
+                        $shot = new Schuss();
+                        $shot->setId($shotData['dbid']);
+                        $shot->setWert($shotData['value']);
+                        $shotDAO->updateShot($shot);
+                    }
+                }
+            }
+        }
+
 
         if ($session->getIsWettkampf()) {
             header('Location: /competition');
