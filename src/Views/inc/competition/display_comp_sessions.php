@@ -3,26 +3,26 @@
     <div class="training-session-grid">
         <?php foreach ($sessions as $session): ?>
             <div class="training-session-card">
-                <h3 class="training-session-title"><?= htmlspecialchars($session->desc) ?></h3>
-                <p><strong>Ort:</strong> <?= htmlspecialchars(string: $session->ort) ?></p>
-                <p><strong>Start:</strong> <?= htmlspecialchars(string: $session->startAt) ?></p>
-                <p><small>Eingefügt am: <?= htmlspecialchars($session->insertedAt) ?></small></p>
+                <h3 class="training-session-title"><?= htmlspecialchars($session->getDesc()) ?></h3>
+                <p><strong>Ort:</strong> <?= htmlspecialchars(string: $session->getOrt()) ?></p>
+                <p><strong>Start:</strong> <?= htmlspecialchars(string: $session->getStartAt()) ?></p>
+                <p><small>Eingefügt am: <?= htmlspecialchars($session->getInsertedAt()) ?></small></p>
                 <div class="d-md-block session-btn-group">
                     <!-- Delete Button -->                    
                     <form method="POST" action="/removeSession" class="d-inline">
                         <input type="hidden" name="origin" value="training">
-                        <input type="hidden" name="sessionId" value="<?= htmlspecialchars($session->id) ?>">
+                        <input type="hidden" name="sessionId" value="<?= htmlspecialchars($session->getId()) ?>">
                         <button type="submit" class="btn btn-danger btn-sm" title="Löschen" type="button">
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>
                     <!-- Edit button -->
                     <button class="btn btn-warning btn-sm" id="edit-session"  type="button"
-                            data-session-id="<?= htmlspecialchars($session->id) ?>" 
-                            data-desc="<?= htmlspecialchars($session->desc) ?>" 
-                            data-ort="<?= htmlspecialchars($session->ort) ?>" 
-                            data-isWettkampf="<?= htmlspecialchars($session->isWettkampf) ?>"
-                            data-startAt="<?= htmlspecialchars($session->startAt) ?>"
+                            data-session-id="<?= htmlspecialchars($session->getId()) ?>" 
+                            data-desc="<?= htmlspecialchars($session->getDesc()) ?>" 
+                            data-ort="<?= htmlspecialchars($session->getOrt()) ?>" 
+                            data-isWettkampf="<?= htmlspecialchars($session->getIsWettkampf()) ?>"
+                            data-startAt="<?= htmlspecialchars($session->getStartAt()) ?>"
                             data-bs-toggle="modal" 
                             data-bs-target="#editSessionModal">
                         <i class="bi bi-pencil"></i>

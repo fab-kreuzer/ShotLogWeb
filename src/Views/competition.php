@@ -18,7 +18,9 @@
     //Include Sessions view
     include 'inc/competition/display_comp_sessions.php';
     include 'inc/session/editSession.php';
+?>
 
+<?php 
     $content = ob_get_clean();
     include 'inc/layout.php';
 ?>

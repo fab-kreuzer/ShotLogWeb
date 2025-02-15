@@ -1,24 +1,4 @@
 <?php
-/* Start the session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once  $_SERVER['DOCUMENT_ROOT'] . '/dao/UsersDAO.php';
-function getNameFromUserName($userName) {
-    $userDao = new UsersDAO();
-    return $userDao->getNameFromUserName($userName);
-}
-
-function isUserAdmin($userName) {
-    $userDao = new UsersDAO();
-    return $userDao->isUserAdmin($userName);
-}
-function isUserDev($userName) {
-    $userDao = new UsersDAO();
-    return $userDao->isUserDev($userName);
-}
-/
-*/
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
