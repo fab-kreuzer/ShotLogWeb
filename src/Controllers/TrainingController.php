@@ -19,23 +19,31 @@ class TrainingController extends Controller {
         $this->render("training",  ['sessions' => $sessions]);
     }
 
-    public function addTraining(): void
+    public function updateCompleteTraining(): void
     {
         // Parse form data
         $sessionDAO = new SessionDAO();
+        $sessionId = null;
+        
+        if ($_POST['sessionId'] != null) {
+            //Clear current Session
+            $sessionDAO->clearCurrentSession($_POST['sessionId']);
+            $sessionId = $_POST['sessionId'];
+        } else {
+            // Create and save the session
+            $session = new Session(
+                null,
+                $_POST['ort'],
+                $_POST['start_at'],
+                false,
+                date('Y-m-d H:i:s'),
+                $_SESSION['user_id'],
+                $_POST['desc']
+            );
+            $sessionDAO->addSession($session);
+            $sessionId = $sessionDAO->lastInsertId();
 
-        // Create and save the session
-        $session = new Session(
-            null,
-            $_POST['location'],
-            $_POST['datetime'],
-            false,
-            date('Y-m-d H:i:s'),
-            $_SESSION['user_id'],
-            $_POST['desc']
-        );
-        $sessionDAO->addSession($session);
-        $sessionId = $sessionDAO->lastInsertId();
+        }
 
         // Iterate over series and shots
         if (isset($_POST['series']) && is_array($_POST['series'])) {
@@ -61,7 +69,7 @@ class TrainingController extends Controller {
             }
         }
         // Respond with success
-        echo json_encode(['success' => true, 'sessionId' => $session->getId()]);
+        echo json_encode(['success' => true, 'sessionId' => $sessionId]);
         header('Location: /training');
     }
     

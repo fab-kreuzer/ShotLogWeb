@@ -59,7 +59,7 @@ $router->post("/addUser", UserManagementController::class, "addUser");
 $router->post("/removeUser", UserManagementController::class, "removeUser");
 $router->post('/updateUser', UserManagementController::class, 'updateUser');
 $router->get('/api/getUserEvents', CalenderController::class,'getUserEvents');
-$router->post('/addTraining', TrainingController::class,'addTraining');
+$router->post('/updateCompleteTraining', TrainingController::class,'updateCompleteTraining');
 $router->post('/addCompetition', CompetitionController::class,'addCompetition');
 $router->post('/removeSession', SessionController::class,'deleteSession');
 $router->post('/updateSession', SessionController::class,'updateSession');

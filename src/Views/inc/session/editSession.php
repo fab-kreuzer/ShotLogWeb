@@ -5,7 +5,7 @@
                 <h5 class="modal-title" id="editSessionModalLabel">Session ändern</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/updateSession" method="post"> <!-- Redirects to new handler -->
+            <form action="/updateCompleteTraining" method="post"> <!-- Redirects to new handler -->
                 <div class="modal-body">
                     <input type="hidden" name="sessionId" id="sessionId">
                     <div class="mb-3">
@@ -64,8 +64,6 @@
             const shotValue = input.value;
             const shotDbId = input.getAttribute('dbid');
             
-            console.log('Shot dbid:', shotDbId); // Add this line for debugging
-
             if (!shotsData[seriesIndex]) {
                 shotsData[seriesIndex] = {};
             }
@@ -114,11 +112,12 @@
                     const series = result.data.series;
                     const seriesTab = document.getElementById('editSeriesTab');
                     const seriesTabContent = document.getElementById('editSeriesTabContent');
+                    // Clear previous content from both containers
                     seriesTab.innerHTML = '';
                     seriesTabContent.innerHTML = '';
+                    seriesCount = 0;
 
                     series.forEach((series, index) => {
-                        seriesCount++;
                         const tabId = `series-${index + 1}`;
                         const activeClass = index === 0 ? 'active' : '';
 
@@ -129,6 +128,7 @@
                         <button class="nav-link ${activeClass}" id="edit-tab-${tabId}" data-bs-toggle="tab" data-bs-target="#edit-${tabId}" type="button" role="tab" aria-controls="edit-${tabId}" aria-selected="${index === 0}">
                             Serie ${index + 1}
                         </button>
+
                         `;
                         seriesTab.appendChild(tab);
 
@@ -141,6 +141,9 @@
                         seriesDiv.id = `edit-${tabId}`;
                         seriesDiv.setAttribute('role', `tabpanel`);
                         seriesDiv.setAttribute('aria-labelledby', `edit-tab-${index + 1}`);
+
+                        seriesDiv.innerHTML = `<button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+ Schuss</button>`;
+
 
                         // Add shots
                         series.schusse.forEach((schuss, i) => {
@@ -159,6 +162,7 @@
                         });
 
                         seriesTabContent.appendChild(seriesDiv);
+                        seriesCount++;
                     });
                 } catch (error) {
                     console.error('Error fetching session details:', error);
@@ -178,8 +182,7 @@
         newTab.classList.add('nav-item');
         newTab.role = 'presentation';
         newTab.innerHTML = `
-            <button class="nav-link" id="series-tab-${seriesCount}" data-bs-toggle="tab" data-bs-target="#series-${seriesCount}" type="button" role="tab" aria-controls="series-${seriesCount}" aria-selected="false">Serie ${seriesCount}</button>
-        `;
+            <button class="nav-link" id="series-tab-${seriesCount}" data-bs-toggle="tab" data-bs-target="#series-${seriesCount}" type="button" role="tab" aria-controls="series-${seriesCount}" aria-selected="false">Serie ${seriesCount}</button>`;
         seriesTab.appendChild(newTab);
 
         // Create new tab content
@@ -189,7 +192,6 @@
         newTabPane.role = 'tabpanel';
         newTabPane.setAttribute('aria-labelledby', `series-tab-${seriesCount}`);
         newTabPane.innerHTML = `
-            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+</button>
             <div id="schuss-container-${seriesCount}" class="row schuss-container">
                 <div class="col-3 mb-3">
                     <label for="schuss-${seriesCount}-1" class="form-label">Schuss 1</label>

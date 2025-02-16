@@ -180,4 +180,41 @@ class SessionDAO
 
         return null;
     }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
+
+    public function clearCurrentSession($sessionID)
+    {
+        //get all series from session
+        $query = "SELECT id FROM serie WHERE sessionId = :sID";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':sID', $sessionID);
+        if ($stmt->execute()) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                $this->debug_to_console($row['id']);
+                //remove all shots from series
+                $query = "DELETE FROM schuss WHERE serienId = :id";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':id', $row['id']);
+                $stmt->execute();
+
+                //remove serie itself
+                $query = "DELETE FROM serie WHERE id = :id";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':id', $row['id']);
+                $stmt->execute();
+
+            }
+        }
+    }
+
+
 }
