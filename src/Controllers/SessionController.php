@@ -3,9 +3,11 @@
 namespace ShotLog\Controllers;
 
 use ShotLog\Controller;
+use ShotLog\DAO\SerienDAO;
 use ShotLog\DAO\SessionDAO;
 use ShotLog\DAO\ShotDAO;
 use ShotLog\Models\Schuss;
+use ShotLog\Models\Serie;
 use ShotLog\Models\Session;
 
 class SessionController extends Controller {
@@ -19,42 +21,61 @@ class SessionController extends Controller {
         header(header: 'Location: /' . $origin);
     }
 
-    public function updateSession(): void
+    public function updateCompleteSession(): void
     {
-        // Assume $session is populated with the updated values
-        $session = new Session();
-        $session->setId($_POST['sessionId']);
-        $session->setIsWettkampf($_POST['isWettkampf']);
-        $session->setOrt($_POST['ort']);
-        $session->setStartAt($_POST['start_at']);
-        $session->setDesc($_POST['desc']);
-
+        // Parse form data
         $sessionDAO = new SessionDAO();
-        $sessionDAO->updateSession($session);
+        $sessionId = null;
+        // Create and save the session
+        $session = new Session(
+            null,
+            $_POST['ort'],
+            $_POST['start_at'],
+            $_POST['referrer'] == 'competition',
+            date('Y-m-d H:i:s'),
+            $_SESSION['user_id'],
+            $_POST['desc']
+        );
 
-        // Handle shots
-        if (isset($_POST['shots'])) {
-            $shots = json_decode($_POST['shots'], true);
-            $shotDAO = new ShotDAO();
 
-            foreach ($shots as $seriesIndex => $seriesShots) {
-                foreach ($seriesShots as $shotIndex => $shotData) {
-                    if ($shotData['dbid'] != null) {
+        if ($_POST['sessionId'] != null) {
+            //Clear current Session
+            $sessionDAO->clearCurrentSession($_POST['sessionId']);
+            $sessionId = $_POST['sessionId'];
+            $session->setId($sessionId);
+            $sessionDAO->updateSession($session);
+        } else {
+            $sessionDAO->addSession($session);
+            $sessionId = $sessionDAO->lastInsertId();
+
+        }
+
+        // Iterate over series and shots
+        if (isset($_POST['series']) && is_array($_POST['series'])) {
+            foreach ($_POST['series'] as $seriesData) {
+                $serie = new Serie();
+                $serie->setSessionId($sessionId);
+                $serie->setIsTest(false);
+                //save Serie
+                $serienDAO = new SerienDAO();
+                $serienDAO->saveSerie($serie);
+                $serienId = $serienDAO->lastInsertId();
+
+                if (isset($seriesData['schuss']) && is_array($seriesData['schuss'])) {
+                    foreach ($seriesData['schuss'] as $shotValue) {
                         $shot = new Schuss();
-                        $shot->setId($shotData['dbid']);
-                        $shot->setWert($shotData['value']);
-                        $shotDAO->updateShot($shot);
+                        $shot->setWert($shotValue);
+                        $shot->setSerienId($serienId);
+                        //save shot in db
+                        $shotDAO = new ShotDAO();
+                        $shotDAO->saveShot($shot);
                     }
                 }
             }
         }
-
-
-        if ($session->getIsWettkampf()) {
-            header('Location: /competition');
-        } else {
-            header('Location: /training');
-        }
+        // Respond with success
+        echo json_encode(['success' => true, 'sessionId' => $sessionId]);
+        header('Location: /' . $_POST['referrer']);
     }
 
     public function updateTime()
