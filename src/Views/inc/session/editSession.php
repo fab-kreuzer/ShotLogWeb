@@ -142,8 +142,13 @@
                         seriesDiv.setAttribute('role', `tabpanel`);
                         seriesDiv.setAttribute('aria-labelledby', `edit-tab-${index + 1}`);
 
-                        seriesDiv.innerHTML = `<button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+ Schuss</button>`;
+                        seriesDiv.innerHTML = `
+                            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3" onclick="addSchuss(${index})">+ Schuss</button>
+                        `;
 
+                        const schussContainerDiv = document.createElement('div');
+                        schussContainerDiv.id = "schuss-container-" + index;
+                        schussContainerDiv.classList.add('row', 'schuss-container');
 
                         // Add shots
                         series.schusse.forEach((schuss, i) => {
@@ -153,14 +158,15 @@
 
                             schussRow.innerHTML = `
                             <div class="col-4">
-                                <label for="schuss-${index + 1}-${i + 1}" class="form-label">Schuss ${i + 1}</label>
-                                <input type="number" class="form-control" id="schuss-${index + 1}-${i + 1}" name="series[${index}][schuss][${i}]" value="${schuss.wert}" dbid="${schuss.id}" step="0.1" required>
+                                <label for="schuss-${index}-${i + 1}" class="form-label">Schuss ${i + 1}</label>
+                                <input type="number" class="form-control" id="schuss-${index}-${i + 1}" name="series[${index}][schuss][${i}]" value="${schuss.wert}" dbid="${schuss.id}" step="0.1" required>
                             </div>
                             `;
 
-                            seriesDiv.appendChild(schussRow);
+                            schussContainerDiv.appendChild(schussRow);
                         });
-
+                        seriesDiv.appendChild(schussContainerDiv);
+                        console.log(seriesDiv);
                         seriesTabContent.appendChild(seriesDiv);
                         seriesCount++;
                     });
@@ -194,7 +200,7 @@
         newTabPane.innerHTML = `
             <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+ Schuss</button>
             <div id="schuss-container-${seriesCount}" class="row schuss-container">
-                <div class="col-3 mb-3">
+                <div class="row align-items-center mb-3">
                     <label for="schuss-${seriesCount}-1" class="form-label">Schuss 1</label>
                     <input type="number" class="form-control" id="schuss-${seriesCount}-1" name="series[${seriesCount - 1}][schuss][0]" step="0.1" required>
                 </div>
@@ -213,10 +219,12 @@
 
         if (schussCount < maxSchuss) {
             const newSchuss = document.createElement('div');
-            newSchuss.classList.add('col-3', 'mb-3');
+            newSchuss.classList.add('row', 'align-items-center', 'mb-3');
             newSchuss.innerHTML = `
+            <div class="col-4">
                 <label for="schuss-${seriesId}-${schussCount + 1}" class="form-label">Schuss ${schussCount + 1}</label>
-                <input type="number" class="form-control" id="schuss-${seriesId}-${schussCount + 1}" name="series[${seriesId - 1}][schuss][${schussCount}]" step="0.1" required>
+                <input type="number" class="form-control" id="schuss-${seriesId}-${schussCount + 1}" name="series[${seriesId}][schuss][${schussCount}]" step="0.1" required>
+            </div>
             `;
             schussContainer.appendChild(newSchuss);
         } else {
