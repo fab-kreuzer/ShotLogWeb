@@ -181,14 +181,6 @@ class SessionDAO
         return null;
     }
 
-    function debug_to_console($data) {
-        $output = $data;
-        if (is_array($output))
-            $output = implode(',', $output);
-    
-        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-    }
-
     public function clearCurrentSession($sessionID)
     {
         //get all series from session
@@ -199,7 +191,6 @@ class SessionDAO
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($row) {
-                $this->debug_to_console($row['id']);
                 //remove all shots from series
                 $query = "DELETE FROM schuss WHERE serienId = :id";
                 $stmt = $this->db->prepare($query);

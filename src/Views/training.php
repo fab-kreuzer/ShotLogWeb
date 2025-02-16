@@ -44,7 +44,7 @@ include 'inc/session/editSession.php';
         <button class="nav-link active" id="series-tab-1" data-bs-toggle="tab" data-bs-target="#series-1" type="button" role="tab" aria-controls="series-1" aria-selected="true">
           Serie 1
         </button>
-    `;
+    `;   
     seriesTab.appendChild(defaultTab);
 
     const defaultTabPane = document.createElement('div');
@@ -53,13 +53,15 @@ include 'inc/session/editSession.php';
     defaultTabPane.setAttribute('role', 'tabpanel');
     defaultTabPane.setAttribute('aria-labelledby', 'series-tab-1');
     defaultTabPane.innerHTML = `
-        <div id="schuss-container-1" class="row schuss-container">
-            <div class="col-3 mb-3">
-                <label for="schuss-1-1" class="form-label">Schuss 1</label>
-                <input type="number" class="form-control" id="schuss-1-1" name="series[0][schuss][0]" step="0.1" required>
+        <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3" onclick="addSchuss(0)">+ Schuss</button>
+        <div id="schuss-container-0" class="row schuss-container">
+            <div class="row align-items-center mb-3">
+                <div class="col-4">
+                    <label for="schuss-0-1" class="form-label">Schuss 1</label>
+                    <input type="number" class="form-control" id="schuss-0-1" name="series[0][schuss][0]" step="0.1" required>
+                </div>
             </div>
         </div>
-        <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3" onclick="addSchuss(1)">+ Schuss</button>
     `;
     seriesTabContent.appendChild(defaultTabPane);
 });

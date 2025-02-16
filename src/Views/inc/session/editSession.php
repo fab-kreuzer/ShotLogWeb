@@ -53,35 +53,6 @@
         let seriesCount = 1;
         let maxSchuss = 10;
 
-    document.querySelector('#editSessionModal form').addEventListener('submit', function(event) {
-        // Gather shots data
-        const shotsData = {};
-        const shotInputs = document.querySelectorAll('[id^="schuss-"]');
-
-        shotInputs.forEach(input => {
-            const seriesIndex = input.id.split('-')[1] - 1;
-            const shotIndex = input.id.split('-')[2] - 1;
-            const shotValue = input.value;
-            const shotDbId = input.getAttribute('dbid');
-            
-            if (!shotsData[seriesIndex]) {
-                shotsData[seriesIndex] = {};
-            }
-            
-            shotsData[seriesIndex][shotIndex] = {
-                value: shotValue,
-                dbid: shotDbId
-            };
-        });
-
-        // Add shots data to the form as a hidden input
-        const shotsInput = document.createElement('input');
-        shotsInput.type = 'hidden';
-        shotsInput.name = 'shots';
-        shotsInput.value = JSON.stringify(shotsData);
-        this.appendChild(shotsInput);
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
         const editButtons = document.querySelectorAll('#edit-session');
 
@@ -110,6 +81,7 @@
                     const response = await fetch(`/api/getTrainingData?sessionId=${sessionId}`);
                     const result = await response.json();
                     const series = result.data.series;
+                    console.log(series);
                     const seriesTab = document.getElementById('editSeriesTab');
                     const seriesTabContent = document.getElementById('editSeriesTabContent');
                     // Clear previous content from both containers
@@ -125,7 +97,7 @@
                         const tab = document.createElement('li');
                         tab.classList.add('nav-item');
                         tab.innerHTML = `
-                        <button class="nav-link ${activeClass}" id="edit-tab-${tabId}" data-bs-toggle="tab" data-bs-target="#edit-${tabId}" type="button" role="tab" aria-controls="edit-${tabId}" aria-selected="${index === 0}">
+                        <button class="nav-link ${activeClass}" id="series-tab-${tabId}" data-bs-toggle="tab" data-bs-target="#edit-${tabId}" type="button" role="tab" aria-controls="edit-${tabId}" aria-selected="${index === 0}">
                             Serie ${index + 1}
                         </button>
 
@@ -140,7 +112,7 @@
                         }
                         seriesDiv.id = `edit-${tabId}`;
                         seriesDiv.setAttribute('role', `tabpanel`);
-                        seriesDiv.setAttribute('aria-labelledby', `edit-tab-${index + 1}`);
+                        seriesDiv.setAttribute('aria-labelledby', `series-tab-${index + 1}`);
 
                         seriesDiv.innerHTML = `
                             <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3" onclick="addSchuss(${index})">+ Schuss</button>
@@ -196,13 +168,15 @@
         newTabPane.classList.add('tab-pane', 'fade');
         newTabPane.id = `series-${seriesCount}`;
         newTabPane.role = 'tabpanel';
-        newTabPane.setAttribute('aria-labelledby', `series-tab-${seriesCount}`);
+        newTabPane.setAttribute('aria-labelledby', `series-tab-${seriesCount - 1}`);
         newTabPane.innerHTML = `
-            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+ Schuss</button>
-            <div id="schuss-container-${seriesCount}" class="row schuss-container">
+            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount - 1})">+ Schuss</button>
+            <div id="schuss-container-${seriesCount - 1}" class="row schuss-container">
                 <div class="row align-items-center mb-3">
-                    <label for="schuss-${seriesCount}-1" class="form-label">Schuss 1</label>
-                    <input type="number" class="form-control" id="schuss-${seriesCount}-1" name="series[${seriesCount - 1}][schuss][0]" step="0.1" required>
+                    <div class="col-4">
+                        <label for="schuss-${seriesCount - 1}-1" class="form-label">Schuss 1</label>
+                        <input type="number" class="form-control" id="schuss-${seriesCount - 1}-1" name="series[${seriesCount - 1}][schuss][0]" step="0.1" required>
+                    </div>
                 </div>
             </div>
         `;

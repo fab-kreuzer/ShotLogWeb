@@ -44,7 +44,7 @@ class TrainingController extends Controller {
             $sessionId = $sessionDAO->lastInsertId();
 
         }
-
+        
         // Iterate over series and shots
         if (isset($_POST['series']) && is_array($_POST['series'])) {
             foreach ($_POST['series'] as $seriesData) {
