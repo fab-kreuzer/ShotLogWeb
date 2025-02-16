@@ -192,6 +192,7 @@
         newTabPane.role = 'tabpanel';
         newTabPane.setAttribute('aria-labelledby', `series-tab-${seriesCount}`);
         newTabPane.innerHTML = `
+            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+ Schuss</button>
             <div id="schuss-container-${seriesCount}" class="row schuss-container">
                 <div class="col-3 mb-3">
                     <label for="schuss-${seriesCount}-1" class="form-label">Schuss 1</label>
