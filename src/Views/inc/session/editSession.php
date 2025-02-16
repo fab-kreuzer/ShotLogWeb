@@ -35,6 +35,7 @@
                     </div>
 
                     <!-- Series and Shots -->
+                    <button type="button" class="btn btn-primary bg-dark-green mb-3" id="add-series">+ Serie</button>
                     <ul class="nav nav-tabs" id="editSeriesTab" role="tablist"></ul>
                     <div class="tab-content" id="editSeriesTabContent"></div>
 
@@ -49,6 +50,9 @@
 </div>
 
 <script>
+        let seriesCount = 1;
+        let maxSchuss = 10;
+
     document.querySelector('#editSessionModal form').addEventListener('submit', function(event) {
         // Gather shots data
         const shotsData = {};
@@ -114,6 +118,7 @@
                     seriesTabContent.innerHTML = '';
 
                     series.forEach((series, index) => {
+                        seriesCount++;
                         const tabId = `series-${index + 1}`;
                         const activeClass = index === 0 ? 'active' : '';
 
@@ -123,7 +128,8 @@
                         tab.innerHTML = `
                         <button class="nav-link ${activeClass}" id="edit-tab-${tabId}" data-bs-toggle="tab" data-bs-target="#edit-${tabId}" type="button" role="tab" aria-controls="edit-${tabId}" aria-selected="${index === 0}">
                             Serie ${index + 1}
-                        </button>`;
+                        </button>
+                        `;
                         seriesTab.appendChild(tab);
 
                         // Add tab content
@@ -160,4 +166,60 @@
             });
         });
     });
+
+    document.getElementById('add-series').addEventListener('click', () => {
+        seriesCount++;
+
+        const seriesTab = document.getElementById('editSeriesTab');
+        const seriesTabContent = document.getElementById('editSeriesTabContent');
+
+        // Create new tab
+        const newTab = document.createElement('li');
+        newTab.classList.add('nav-item');
+        newTab.role = 'presentation';
+        newTab.innerHTML = `
+            <button class="nav-link" id="series-tab-${seriesCount}" data-bs-toggle="tab" data-bs-target="#series-${seriesCount}" type="button" role="tab" aria-controls="series-${seriesCount}" aria-selected="false">Serie ${seriesCount}</button>
+        `;
+        seriesTab.appendChild(newTab);
+
+        // Create new tab content
+        const newTabPane = document.createElement('div');
+        newTabPane.classList.add('tab-pane', 'fade');
+        newTabPane.id = `series-${seriesCount}`;
+        newTabPane.role = 'tabpanel';
+        newTabPane.setAttribute('aria-labelledby', `series-tab-${seriesCount}`);
+        newTabPane.innerHTML = `
+            <button type="button" class="btn btn-secondary bg-dark-green mt-3 mb-3"" onclick="addSchuss(${seriesCount})">+</button>
+            <div id="schuss-container-${seriesCount}" class="row schuss-container">
+                <div class="col-3 mb-3">
+                    <label for="schuss-${seriesCount}-1" class="form-label">Schuss 1</label>
+                    <input type="number" class="form-control" id="schuss-${seriesCount}-1" name="series[${seriesCount - 1}][schuss][0]" step="0.1" required>
+                </div>
+            </div>
+        `;
+        seriesTabContent.appendChild(newTabPane);
+
+        // Activate the new tab
+        const tabTrigger = new bootstrap.Tab(document.getElementById(`series-tab-${seriesCount}`));
+        tabTrigger.show();
+    });
+
+    function addSchuss(seriesId) {
+        const schussContainer = document.getElementById(`schuss-container-${seriesId}`);
+        const schussCount = schussContainer.children.length;
+
+        if (schussCount < maxSchuss) {
+            const newSchuss = document.createElement('div');
+            newSchuss.classList.add('col-3', 'mb-3');
+            newSchuss.innerHTML = `
+                <label for="schuss-${seriesId}-${schussCount + 1}" class="form-label">Schuss ${schussCount + 1}</label>
+                <input type="number" class="form-control" id="schuss-${seriesId}-${schussCount + 1}" name="series[${seriesId - 1}][schuss][${schussCount}]" step="0.1" required>
+            `;
+            schussContainer.appendChild(newSchuss);
+        } else {
+            alert(`Maximal ${maxSchuss} Schüsse pro Serie erlaubt.`);
+        }
+    }
+
+
 </script>

@@ -13,8 +13,6 @@
 
 <?php
 
-//Modal einbinden
-include 'inc/training/add_training_modal.php';
 //Include Sessions view
 include 'inc/training/display_training_sessions.php';
 include 'inc/session/editSession.php';
