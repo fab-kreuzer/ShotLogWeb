@@ -5,9 +5,10 @@
                 <h5 class="modal-title" id="editSessionModalLabel">Session ändern</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/updateCompleteTraining" method="post"> <!-- Redirects to new handler -->
+            <form action="/updateCompleteSession" method="post"> <!-- Redirects to new handler -->
                 <div class="modal-body">
                     <input type="hidden" name="sessionId" id="sessionId">
+                    <input type="hidden" name="referrer" id="referrer">
                     <div class="mb-3">
                         <label for="desc" class="form-label">Beschreibung</label>
                         <input type="text" class="form-control" id="desc" name="desc" required>
@@ -55,6 +56,10 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const editButtons = document.querySelectorAll('#edit-session');
+
+        const referrerInput = document.querySelector('#referrer');
+        referrerInput.value = document.location.href.substring(document.location.href.lastIndexOf('/') + 1);
+
 
         editButtons.forEach(button => {
             button.addEventListener('click', async () => {
