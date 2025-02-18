@@ -2,6 +2,8 @@
 
 namespace ShotLog\Utils;
 
+use ShotLog\Models\Session;
+
 class CalenderUtils
 {
     /**
@@ -15,14 +17,14 @@ class CalenderUtils
         // Convert each Session object to an associative array
         $data = array_map(function ($session) {
             return [
-                'id' => $session->id,
-                'title' => $session->desc,
-                'start' => $session->startAt,
-                'end' => $session->startAt,
+                'id' => $session->getId(),
+                'title' => $session->getDesc(),
+                'start' => $session->getStartAt(),
+                'end' => $session->getStartAt(),
                 'extendedProps' => [ // Nested properties
-                    'location' => $session->ort
+                    'location' => $session->getOrt()
                 ],
-                'color' => $session->isWettkampf ? '#4a1f17' : '#3a4a17'
+                'color' => $session->getIsWettkampf() ? '#4a1f17' : '#3a4a17'
             ];
         }, $sessions);
 

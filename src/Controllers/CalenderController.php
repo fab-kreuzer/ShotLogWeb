@@ -14,7 +14,7 @@ class CalenderController extends Controller {
 
     public function getUserEvents() {
         $sessionDAO = new SessionDAO();
-        $events = $sessionDAO->getSessionByUser($_SESSION['user_id']);
+        $events = $sessionDAO->getSessionByUser($_GET['user_id']);
         echo CalenderUtils::toCalenderEntries($events);
     }
 }

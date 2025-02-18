@@ -30,7 +30,7 @@
             events: async function (info, successCallback, failureCallback) {
                 try {
                     // Fetch user events
-                    let userEventsResponse = await fetch('/api/getUserEvents');
+                    let userEventsResponse = await fetch('/api/getUserEvents?user_id=' + <?php echo $_SESSION['user_id']; ?>);
                     let userEvents = await userEventsResponse.json();
 
                     // Fetch Bavarian holidays
