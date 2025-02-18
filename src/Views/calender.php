@@ -32,9 +32,9 @@
                     // Fetch user events
                     let userEventsResponse = await fetch('/api/getUserEvents?user_id=' + <?php echo $_SESSION['user_id']; ?>);
                     let userEvents = await userEventsResponse.json();
-
+                    let selectedYear = new Date(new Date(info.startStr).setDate(new Date(info.startStr).getDate() + 10)).getFullYear();
                     // Fetch Bavarian holidays
-                    let holidaysResponse = await fetch('https://feiertage-api.de/api/?jahr=2024&nur_land=BY');
+                    let holidaysResponse = await fetch('https://feiertage-api.de/api/?jahr=' + selectedYear + '&nur_land=BY');
                     let holidaysData = await holidaysResponse.json();
 
                     // Convert holidays to FullCalendar format
@@ -49,7 +49,6 @@
                             }
                         };
                     });
-                    console.log(holidayEvents);
                     // Combine user events and holidays
                     successCallback([...userEvents, ...holidayEvents]);
                 } catch (error) {
